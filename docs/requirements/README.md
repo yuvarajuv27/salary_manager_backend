@@ -2,17 +2,14 @@
 
 ## Whole-project requirements
 
-Canonical document (do **not** duplicate content here):
+Canonical product requirements are in the frontend repository. Do **not** duplicate them here.
 
-- Link from this file: [salary_manager_frontend/docs/requirements/project.md](../../../salary_manager_frontend/docs/requirements/project.md)
-- From backend repo root: `../salary_manager_frontend/docs/requirements/project.md`
+Reference: https://github.com/yuvarajuv27/salary_manager_frontend/tree/main/docs/requirements
 
-Update product-wide scope in the frontend file only. This README is the pointer.
+Update product-wide scope in that frontend tree only. This README is the pointer.
 
 ## Feature-specific requirements
 
 Maintain BE-owned features under [features/](./features/) as `<feature-slug>.md`.
 
-For cross-cutting work, also keep/read the FE feature file when that workspace is open:
-
-`../salary_manager_frontend/docs/requirements/features/<feature-slug>.md`
+For cross-cutting work, also keep/read the matching feature file in the frontend requirements tree above.

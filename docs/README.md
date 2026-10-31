@@ -6,12 +6,12 @@
 
 | Path | Purpose |
 |---|---|
-| [requirements/README.md](./requirements/README.md) | Link to whole-project requirements + BE features |
+| [requirements/README.md](./requirements/README.md) | Pointer to the frontend requirements on GitHub, plus BE features |
 | [requirements/features/](./requirements/features/) | BE-owned feature requirements |
-| [architecture/](./architecture/) | Architecture notes per feature |
+| [architecture/](./architecture/) | Backend architecture. The frontend repo holds the client architecture |
 | [plans/](./plans/) | Implementation plans per feature |
 
-Sibling frontend: `../salary_manager_frontend_local`.
+Sibling frontend: `../salary_manager_frontend`.
 
 ## Superpowers plugin
 
