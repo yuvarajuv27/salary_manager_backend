@@ -1,0 +1,27 @@
+---
+description: Where to store requirements, architecture, and plans for Salary Manager backend
+alwaysApply: true
+---
+
+# Salary Manager — docs pipeline (Backend)
+
+Whole-project product requirements are **canonical in the frontend repo**. This backend keeps a link only.
+
+## Paths
+
+| Artifact | Location |
+|---|---|
+| Whole-project requirements (link) | `docs/requirements/README.md` → FE `project.md` |
+| BE feature requirements | `docs/requirements/features/<feature-slug>.md` |
+| Architecture | `docs/architecture/<feature-slug>.md` |
+| Implementation plan | `docs/plans/<feature-slug>.md` |
+
+## Rules
+
+- Do **not** duplicate whole-project requirements here; update the FE file via the sibling repo when product scope changes.
+- Maintain **BE-specific** feature requirements under `docs/requirements/features/`.
+- For cross-cutting features, also read/update FE `docs/requirements/features/<slug>.md` when that workspace is available.
+- Architecture docs must name FE vs BE ownership, endpoints, and data shapes.
+- Plans must list tasks with exact file paths and verification steps.
+- Do not invent requirements: capture what the user approved in brainstorming.
+---

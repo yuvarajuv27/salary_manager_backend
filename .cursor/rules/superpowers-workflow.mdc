@@ -1,0 +1,30 @@
+---
+description: Superpowers full-loop workflow for Salary Manager (no commit/push)
+alwaysApply: true
+---
+
+# Salary Manager — Superpowers workflow (Backend)
+
+This repo uses the Superpowers plugin at **project scope**. Always run the full loop for feature work. Never skip brainstorming, planning, or TDD for “small” changes.
+
+## Mandatory loop
+
+1. **Brainstorm** — clarify intent; get explicit approval before coding.
+2. **Requirements** — update docs (see docs rule).
+3. **Design + architecture** — write/approve before implementation plan.
+4. **Implementation plan** — bite-sized tasks with paths and verification.
+5. **TDD** — RED → GREEN → REFACTOR for every behavior change.
+6. **Review** — check against plan between tasks.
+7. **Finish** — verify tests; summarize; leave git alone.
+
+## Git (hard override)
+
+- Do **not** `git commit`, `git push`, create PRs, or merge unless the user explicitly asks in this conversation.
+- Superpowers TDD / finishing-a-development-branch commit/push steps are **disabled** here.
+- On completion: keep worktree/branch as-is (or uncommitted files); report what changed and how to verify.
+
+## TDD
+
+- Write a failing test first (RSpec as used in this repo); watch it fail; write minimal code; watch it pass; refactor.
+- Do not claim done without running the relevant tests.
+---
