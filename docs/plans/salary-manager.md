@@ -63,3 +63,17 @@ cd /Users/yuvaraj/Personal/salary_manager_backend && bundle exec rspec
 ```
 
 Do not claim a milestone done until its BE request/job/service specs listed in `docs/architecture/salary-manager.md` § Testing are green for that milestone’s scope.
+
+---
+
+## Post-MVP revisions (BE)
+
+Canonical narrative: FE `docs/plans/salary-manager.md` § Post-MVP revisions. Product FRs: FE `docs/requirements/project.md`.
+
+| Revision | BE work |
+|---|---|
+| **R3 UX polish** | `GET /entities/:id/employees` returns `{ employees, page, per_page, total, total_pages }` + `q`; demo seed stores conversions for all entities |
+| **R4 Demo seed** | `DemoSeedLoader` + `rake seed:load_demo` (10×1k default; abort if Admin exists; tunables for specs) |
+| **R5 Feedback** | `GET/PATCH /profile`; company `pay_frequency` / `pay_weekday` / `biweekly_anchor_on`; payroll run `period_start_on` / `period_end_on`; calendar + scheduler + finisher + payslip proration by period |
+
+Do not keep separate BE feature plan/requirement files for these revisions; update this companion and the FE canonical plan instead.
