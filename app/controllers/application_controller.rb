@@ -96,6 +96,19 @@ class ApplicationController < ActionController::API
     }
   end
 
+  def employee_json(employee)
+    {
+      id: employee.id,
+      entity_id: employee.entity_id,
+      name: employee.name,
+      job_role: employee.job_role,
+      department: employee.department,
+      start_on: employee.start_on.iso8601,
+      end_on: employee.end_on&.iso8601,
+      bank_details: employee.bank_details_for_api
+    }
+  end
+
   def validation_errors(*records)
     records.each_with_object({}) do |record, merged|
       record.errors.messages.each do |attribute, messages|
