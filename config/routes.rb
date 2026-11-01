@@ -19,6 +19,8 @@ Rails.application.routes.draw do
       resources :leave_days, only: %i[index create]
       delete "leave_days/:date", to: "leave_days#destroy"
     end
+    resources :payroll_runs, only: %i[index show], param: :month
+    resources :payslips, only: %i[show]
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

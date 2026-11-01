@@ -8,6 +8,7 @@ class Entity < ApplicationRecord
   has_many :entity_credits, dependent: :restrict_with_error
   has_many :payslips, dependent: :restrict_with_error
   has_many :payroll_skips, dependent: :destroy
+  has_many :currency_conversions, dependent: :restrict_with_error
 
   validates :name, presence: true
   validates :country, presence: true, inclusion: { in: Countries.all }

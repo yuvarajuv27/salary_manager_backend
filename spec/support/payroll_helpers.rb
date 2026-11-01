@@ -33,6 +33,8 @@ module PayrollHelpers
     company.payroll_runs.create!({
       month_on:,
       payroll_on: month_on.end_of_month,
+      period_start_on: month_on,
+      period_end_on: month_on.end_of_month,
       primary_currency: company.primary_currency,
       status: "processing"
     }.merge(attrs))
@@ -69,4 +71,5 @@ RSpec.configure do |config|
   config.include PayrollHelpers, type: :model
   config.include PayrollHelpers, type: :service
   config.include PayrollHelpers, type: :request
+  config.include PayrollHelpers, type: :job
 end
