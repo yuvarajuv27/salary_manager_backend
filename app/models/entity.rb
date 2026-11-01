@@ -3,6 +3,7 @@
 class Entity < ApplicationRecord
   belongs_to :company
   has_many :users, dependent: :restrict_with_error
+  has_many :pay_rules, dependent: :destroy
 
   validates :name, presence: true
   validates :country, presence: true, inclusion: { in: Countries.all }
