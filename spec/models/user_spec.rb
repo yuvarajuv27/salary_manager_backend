@@ -44,6 +44,13 @@ RSpec.describe User, type: :model do
       expect(user).not_to be_valid
       expect(user.errors[:entity_id]).to be_present
     end
+
+    it "allows hr users with an entity in the same company" do
+      company = create_company
+      entity = company.entities.create!(name: "India Ops", country: "India", currency: "INR")
+      user = build_user(company, access_role: "hr", entity_id: entity.id, email: "hr@example.com")
+      expect(user).to be_valid
+    end
   end
 
   describe "has_secure_password" do

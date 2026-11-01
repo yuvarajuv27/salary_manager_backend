@@ -5,6 +5,7 @@ class Company < ApplicationRecord
   PAY_FREQUENCIES = %w[monthly weekly biweekly].freeze
 
   has_many :users, dependent: :restrict_with_error
+  has_many :entities, dependent: :restrict_with_error
 
   validates :legal_name, presence: true
   validates :primary_currency, presence: true, inclusion: { in: PRIMARY_CURRENCIES }

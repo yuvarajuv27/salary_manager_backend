@@ -4,6 +4,7 @@ class User < ApplicationRecord
   ACCESS_ROLES = %w[admin hr].freeze
 
   belongs_to :company
+  belongs_to :entity, optional: true
 
   has_secure_password
 
