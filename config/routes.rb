@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
   post "/sign_up", to: "sign_ups#create"
   resource :session, only: %i[show create destroy]
+  resource :profile, only: %i[show update]
 
   resource :company, only: %i[show update]
   resources :users, only: %i[index create]
+  get "/analytics", to: "analytics#account"
+
   resources :entities, only: %i[index show create update destroy] do
+    member do
+      get :analytics, to: "analytics#entity"
+    end
     resources :pay_rules, only: %i[index create update destroy], param: :rule_id do
       collection do
         patch :order
