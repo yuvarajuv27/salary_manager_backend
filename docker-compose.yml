@@ -26,6 +26,9 @@ services:
       DB_PASSWORD: postgres
       RAILS_ENV: development
       CORS_ORIGINS: "http://localhost:5173,http://localhost:5174"
+      ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY: "dev_primary_key_for_local_only!!"
+      ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY: "dev_deterministic_key_local_only!!"
+      ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT: "dev_encryption_salt_for_local"
     volumes:
       - .:/app
     depends_on:
