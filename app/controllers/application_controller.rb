@@ -17,6 +17,21 @@ class ApplicationController < ActionController::API
     head :unauthorized unless current_user
   end
 
+  def require_admin!
+    head :not_found unless current_user&.access_role == "admin"
+  end
+
+  def find_entity!(id)
+    entity = current_company.entities.find_by(id: id)
+    raise ActiveRecord::RecordNotFound unless entity
+
+    if current_user.access_role == "hr" && entity.id != current_user.entity_id
+      raise ActiveRecord::RecordNotFound
+    end
+
+    entity
+  end
+
   def record_not_found
     head :not_found
   end
@@ -40,13 +55,13 @@ class ApplicationController < ActionController::API
       user: user_json(user),
       company: {
         id: company.id,
-        has_entity: false
+        has_entity: company.entities.exists?
       }
     }
   end
 
   def sign_up_company_payload(company)
-    company_json(company).merge(has_entity: false)
+    company_json(company).merge(has_entity: company.entities.exists?)
   end
 
   def company_json(company)
@@ -69,6 +84,15 @@ class ApplicationController < ActionController::API
       email: user.email,
       access_role: user.access_role,
       entity_id: user.entity_id
+    }
+  end
+
+  def entity_json(entity)
+    {
+      id: entity.id,
+      name: entity.name,
+      country: entity.country,
+      currency: entity.currency
     }
   end
 
