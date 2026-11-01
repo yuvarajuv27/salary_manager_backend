@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   post "/sign_up", to: "sign_ups#create"
   resource :session, only: %i[show create destroy]
+  resource :profile, only: %i[show update]
 
   resource :company, only: %i[show update]
   resources :users, only: %i[index create]
