@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Entities API", type: :request do
   include ActiveSupport::Testing::TimeHelpers
+  include PayrollHelpers
 
   def json
     response.parsed_body
@@ -108,7 +109,7 @@ RSpec.describe "Entities API", type: :request do
       expect(json["name"]).to eq("Renamed")
     end
 
-    it "updates country and currency for admin" do
+    it "updates country and currency for admin before payslips" do
       entity = create_entity!(country: "United States")
 
       patch "/entities/#{entity.id}", params: { country: "India" }, as: :json
@@ -117,10 +118,38 @@ RSpec.describe "Entities API", type: :request do
       expect(json["country"]).to eq("India")
       expect(json["currency"]).to eq("INR")
     end
+
+    it "requires a complete bank set for every employee on country change" do
+      entity = create_entity!(country: "United States")
+      employee = create_employee!(entity:)
+
+      patch "/entities/#{entity.id}", params: { country: "India" }, as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json["errors"]["employee_banks"]).to be_present
+      expect(entity.reload.country).to eq("United States")
+      expect(employee.reload.bank_details_hash["routing_number"]).to eq("021000021")
+    end
+
+    it "replaces every employee bank set when the country changes" do
+      entity = create_entity!(country: "United States")
+      employee = create_employee!(entity:)
+
+      patch "/entities/#{entity.id}", params: {
+        country: "India",
+        employee_banks: [
+          { employee_id: employee.id, bank_details: india_bank_details }
+        ]
+      }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(json["country"]).to eq("India")
+      expect(employee.reload.bank_details_hash["ifsc"]).to eq("HDFC0001234")
+    end
   end
 
   describe "DELETE /entities/:id" do
-    it "deletes an entity" do
+    it "deletes an entity with no payslips" do
       entity = create_entity!
 
       expect do
@@ -128,6 +157,32 @@ RSpec.describe "Entities API", type: :request do
       end.to change(Entity, :count).by(-1)
 
       expect(response).to have_http_status(:no_content)
+    end
+
+    it "deletes an entity with only payroll skips and removes the skips" do
+      entity = create_entity!
+      employee = create_employee!(entity:)
+      run = payroll_run(Company.last, month_on: Date.new(2026, 3, 1))
+      payroll_skip_for(run:, employee:)
+
+      expect do
+        delete "/entities/#{entity.id}", as: :json
+      end.to change(Entity, :count).by(-1)
+        .and change(PayrollSkip, :count).by(-1)
+
+      expect(response).to have_http_status(:no_content)
+    end
+
+    it "returns 422 when the entity has a payslip" do
+      entity = create_entity!
+      employee = create_employee!(entity:)
+      run = payroll_run(Company.last, month_on: Date.new(2026, 3, 1))
+      payslip_for(run:, employee:)
+
+      delete "/entities/#{entity.id}", as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json["errors"]["base"]).to be_present
     end
   end
 end

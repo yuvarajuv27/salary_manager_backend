@@ -7,6 +7,8 @@ class Company < ApplicationRecord
   has_many :users, dependent: :restrict_with_error
   has_many :entities, dependent: :restrict_with_error
   has_many :pay_rules, dependent: :restrict_with_error
+  has_many :employees, dependent: :restrict_with_error
+  has_many :payroll_runs, dependent: :restrict_with_error
 
   validates :legal_name, presence: true
   validates :primary_currency, presence: true, inclusion: { in: PRIMARY_CURRENCIES }
